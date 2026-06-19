@@ -166,18 +166,31 @@ test("footer social links use recognizable brand icons and CMS-managed URLs", ()
   const admin = readFileSync(adminPath, "utf8");
   const adminJs = readFileSync(adminJsPath, "utf8");
   const siteCms = readFileSync(siteCmsPath, "utf8");
+  const client = readFileSync(firebaseClientPath, "utf8");
+  const rules = readFileSync(firestoreRulesPath, "utf8");
   const css = readFileSync(stylesPath, "utf8");
 
-  for (const network of ["instagram", "tiktok"]) {
-    assert.match(html, new RegExp(`data-cms-social="${network}"`), `${network} link should be CMS-managed`);
-    assert.match(html, new RegExp(`data-social-icon="${network}"`), `${network} should use a brand SVG icon`);
-    assert.match(siteCms, new RegExp(`social\\?\\.${network}`), `${network} URL should hydrate from site settings`);
-    assert.match(adminJs, new RegExp(`${network}: "https://`), `${network} should have a default starter URL`);
+  for (const network of ["instagram", "tiktok", "facebook", "linkedin"]) {
+    assert.match(adminJs, new RegExp(`icon: "${network}"`), `${network} should have starter social link support`);
   }
 
+  for (const network of ["instagram", "tiktok"]) {
+    assert.match(html, new RegExp(`data-social-icon="${network}"`), `${network} should use a brand SVG icon`);
+  }
+
+  assert.match(html, /data-cms-section="social-links"/);
   assert.match(html, /https:\/\/www\.instagram\.com\/dr\.muhammadasifmushtaq/);
   assert.match(html, /https:\/\/www\.tiktok\.com\/@dr_asifmushtaq/);
-  assert.match(admin, /name="social\.tiktok"/, "Admin settings should include a TikTok URL field");
+  assert.match(admin, /data-admin-form="socialLinks"/, "Admin settings should include social link management form");
+  assert.match(admin, /data-list="socialLinks"/, "Admin settings should include existing social link list");
+  assert.match(admin, /name="platform"/);
+  assert.match(admin, /name="url"[^>]*type="url"/);
+  assert.match(admin, /name="icon"/);
+  assert.match(admin, /Visible on website/);
+  assert.match(client, /socialLinks:\s*"socialLinks"/);
+  assert.match(siteCms, /renderSocialLinks/);
+  assert.match(siteCms, /SOCIAL_ICON_RENDERERS/);
+  assert.match(rules, /match \/socialLinks\/\{document\}/);
   assert.match(css, /\.social-icon\s*\{[^}]*width:\s*20px/s, "Brand SVG icons should have stable sizing");
   assert.match(
     css,

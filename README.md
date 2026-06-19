@@ -91,11 +91,12 @@ You can host the static files on GitHub Pages and still use Firebase for Auth an
 
 ## Data Collections
 
-- `siteSettings/main` - doctor, hero, contact, hours, social links.
+- `siteSettings/main` - doctor, hero, contact, and hours.
 - `services` - treatment cards.
 - `galleryCases` - before/after cases.
 - `testimonials` - patient reviews.
 - `publications` - research publication cards with title, description, and outbound link.
+- `socialLinks` - footer social profile links with icon, URL, order, and visible/hidden status.
 - `faqs` - FAQ accordion.
 - `appointmentRequests` - public form submissions.
 

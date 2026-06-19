@@ -21,12 +21,13 @@ export async function loadPublicCms() {
   if (!root || !isFirebaseConfigured()) return;
 
   try {
-    const [settings, services, gallery, testimonials, publications, faqs] = await Promise.all([
+    const [settings, services, gallery, testimonials, publications, socialLinks, faqs] = await Promise.all([
       getSiteSettings(),
       getOrderedCollection(CMS_COLLECTIONS.services),
       getOrderedCollection(CMS_COLLECTIONS.gallery),
       getOrderedCollection(CMS_COLLECTIONS.testimonials),
       getOrderedCollection(CMS_COLLECTIONS.publications),
+      getOrderedCollection(CMS_COLLECTIONS.socialLinks),
       getOrderedCollection(CMS_COLLECTIONS.faqs),
     ]);
 
@@ -40,6 +41,7 @@ export async function loadPublicCms() {
     renderGallery(gallery.filter(isActive));
     renderTestimonials(testimonials.filter(isActive));
     renderPublications(publications.filter(isActive));
+    renderSocialLinks(socialLinks);
     renderFaqs(faqs.filter(isActive));
     window.DentalSite?.refreshCmsInteractions();
   } catch (error) {
@@ -115,6 +117,37 @@ function applySettings(settings) {
   document.querySelectorAll("[data-cms-social='instagram']").forEach((link) => setHref(link, settings.social?.instagram));
   document.querySelectorAll("[data-cms-social='tiktok']").forEach((link) => setHref(link, settings.social?.tiktok));
 }
+
+const SOCIAL_ICON_RENDERERS = {
+  instagram: () => `
+    <svg class="social-icon" data-social-icon="instagram" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="2" />
+      <circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2" />
+      <circle cx="17" cy="7" r="1.25" fill="currentColor" />
+    </svg>
+  `,
+  tiktok: () => `
+    <svg class="social-icon" data-social-icon="tiktok" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 4c.4 2.4 1.8 3.9 4.2 4.2v3.1c-1.5-.1-2.9-.6-4.2-1.4v5.3c0 3.2-2.1 5.4-5.2 5.4-2.8 0-5-2-5-4.7 0-2.9 2.3-5 5.3-4.8.3 0 .6.1.9.1v3.2c-.3-.1-.6-.2-.9-.2-1.1 0-1.9.7-1.9 1.7 0 1 .7 1.7 1.7 1.7 1.2 0 1.9-.8 1.9-2.2V4h3.2Z" fill="currentColor" />
+    </svg>
+  `,
+  facebook: () => `
+    <svg class="social-icon" data-social-icon="facebook" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 8h2.2V4.4c-.4-.1-1.7-.2-3.1-.2-3.1 0-5.1 1.9-5.1 5.3V12H4.7v4H8v7h4.1v-7h3.4l.5-4h-3.9V9.9c0-1.2.3-1.9 1.9-1.9Z" fill="currentColor" />
+    </svg>
+  `,
+  linkedin: () => `
+    <svg class="social-icon" data-social-icon="linkedin" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6.4 8.8H2.8V21h3.6V8.8ZM4.6 3C3.4 3 2.5 3.9 2.5 5s.9 2 2.1 2 2.1-.9 2.1-2S5.8 3 4.6 3Zm7.6 5.8H8.8V21h3.6v-6.4c0-1.7.8-2.8 2.3-2.8 1.3 0 1.9.9 1.9 2.7V21h3.6v-7.1c0-3.7-1.9-5.5-4.6-5.5-1.7 0-2.8.9-3.4 1.8V8.8Z" fill="currentColor" />
+    </svg>
+  `,
+  youtube: () => `
+    <svg class="social-icon" data-social-icon="youtube" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21.5 7.1c-.2-.9-.9-1.6-1.8-1.8C18.1 5 12 5 12 5s-6.1 0-7.7.3c-.9.2-1.6.9-1.8 1.8C2.2 8.7 2.2 12 2.2 12s0 3.3.3 4.9c.2.9.9 1.6 1.8 1.8 1.6.3 7.7.3 7.7.3s6.1 0 7.7-.3c.9-.2 1.6-.9 1.8-1.8.3-1.6.3-4.9.3-4.9s0-3.3-.3-4.9ZM10.1 15.1V8.9l5.4 3.1-5.4 3.1Z" fill="currentColor" />
+    </svg>
+  `,
+  website: () => `<i data-lucide="globe-2" class="social-icon" aria-hidden="true"></i>`,
+};
 
 function getNested(target, path) {
   return path.split(".").reduce((value, key) => value?.[key], target);
@@ -222,6 +255,23 @@ function renderPublications(items) {
         </article>
       `
     )
+    .join("");
+}
+
+function renderSocialLinks(items) {
+  const container = document.querySelector("[data-cms-section='social-links']");
+  if (!container || !items.length) return;
+
+  const activeItems = items.filter(isActive).filter((item) => item.url);
+  container.innerHTML = activeItems
+    .map((item) => {
+      const iconRenderer = SOCIAL_ICON_RENDERERS[item.icon] || SOCIAL_ICON_RENDERERS.website;
+      return `
+        <a href="${escapeAttribute(item.url)}" aria-label="${escapeAttribute(item.platform || "Social profile")}" target="_blank" rel="noopener">
+          ${iconRenderer()}
+        </a>
+      `;
+    })
     .join("");
 }
 

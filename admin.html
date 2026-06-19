@@ -422,18 +422,57 @@
                   <input name="hours.weekend" placeholder="Sat: 10:00 AM - 4:00 PM" />
                 </div>
               </div>
-              <div class="form-row two-columns">
-                <div>
-                  <label>Instagram URL</label>
-                  <input name="social.instagram" type="url" placeholder="https://instagram.com/..." />
-                </div>
-                <div>
-                  <label>TikTok URL</label>
-                  <input name="social.tiktok" type="url" placeholder="https://www.tiktok.com/@..." />
-                </div>
-              </div>
               <button class="btn btn-primary" type="submit">Save Clinic Settings</button>
             </form>
+            <div class="admin-subsection-heading">
+              <div>
+                <h3>Social Media Links</h3>
+                <p>Add, update, delete, or hide social icons shown in the website footer.</p>
+              </div>
+            </div>
+            <form class="admin-editor" data-admin-form="socialLinks">
+              <input type="hidden" name="id" />
+              <div class="form-row two-columns">
+                <div>
+                  <label>Platform Name</label>
+                  <input name="platform" required placeholder="Facebook" />
+                </div>
+                <div>
+                  <label>Icon</label>
+                  <select name="icon" required>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="website">Website</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Profile URL</label>
+                <input name="url" type="url" required placeholder="https://facebook.com/clinic-page" />
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Order</label>
+                  <input name="order" type="number" value="1" min="0" />
+                </div>
+                <label class="admin-check">
+                  <input name="active" type="checkbox" checked />
+                  Visible on website
+                </label>
+              </div>
+              <button class="btn btn-primary" type="submit">Save Social Link</button>
+              <button class="btn btn-secondary" type="reset">Clear</button>
+            </form>
+            <div class="admin-list-heading">
+              <div>
+                <h3>Existing Social Links</h3>
+                <p>Only records marked visible appear on the public website.</p>
+              </div>
+            </div>
+            <div class="admin-list" data-list="socialLinks"></div>
           </section>
         </div>
       </section>

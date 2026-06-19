@@ -8,6 +8,7 @@ export const CMS_COLLECTIONS = {
   gallery: "galleryCases",
   testimonials: "testimonials",
   publications: "publications",
+  socialLinks: "socialLinks",
   faqs: "faqs",
   settings: "siteSettings",
 };

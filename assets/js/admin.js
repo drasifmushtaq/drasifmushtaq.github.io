@@ -26,6 +26,7 @@ const state = {
     gallery: [],
     testimonials: [],
     publications: [],
+    socialLinks: [],
     faqs: [],
   },
   unsubs: [],
@@ -54,10 +55,6 @@ const starterContent = {
     hours: {
       weekdays: "9:00 AM - 6:00 PM",
       weekend: "10:00 AM - 4:00 PM",
-    },
-    social: {
-      instagram: "https://www.instagram.com/dr.muhammadasifmushtaq",
-      tiktok: "https://www.tiktok.com/@dr_asifmushtaq",
     },
   },
   services: [
@@ -88,6 +85,12 @@ const starterContent = {
     ["denture-hygiene", { title: "Assessment of Knowledge and Practices about Denture Hygiene among Complete Denture Wearers in Lahore City", description: "JPDA research on denture hygiene awareness and patient practices among complete denture wearers.", link: "https://www.jpda.com.pk/assessment-of-knowledge-and-practices-about-denture-hygiene-among-complete-denture-wearers-in-lahore-city", order: 4, active: true }],
     ["alginate-disinfection", { title: "The effect of sodium hypochlorite disinfectant on alginate impression material", description: "Professional Medical Journal study on dimensional stability after sodium hypochlorite disinfection.", link: "https://theprofesional.com/index.php/tpmj/article/view/6200", order: 5, active: true }],
     ["golden-proportion", { title: "Analysis of Golden Proportion in Maxillary Anterior Dentition", description: "Pakistan Oral & Dental Journal article on esthetic proportions in maxillary anterior teeth.", link: "https://podj.com.pk/index.php/podj/article/view/690", order: 6, active: true }],
+  ],
+  socialLinks: [
+    ["instagram", { platform: "Instagram", icon: "instagram", url: "https://www.instagram.com/dr.muhammadasifmushtaq", order: 1, active: true }],
+    ["tiktok", { platform: "TikTok", icon: "tiktok", url: "https://www.tiktok.com/@dr_asifmushtaq", order: 2, active: true }],
+    ["facebook", { platform: "Facebook", icon: "facebook", url: "", order: 3, active: false }],
+    ["linkedin", { platform: "LinkedIn", icon: "linkedin", url: "", order: 4, active: false }],
   ],
   faqs: [
     ["full-mouth-rehab", { question: "Who needs full mouth rehabilitation?", answer: "It is considered for patients with multiple missing, worn, broken, or failing teeth, bite collapse, or complex restorative needs that require coordinated prosthodontic planning.", order: 1, active: true }],
@@ -297,6 +300,15 @@ function renderPublications(rows) {
   window.lucide?.createIcons();
 }
 
+function renderSocialLinks(rows) {
+  renderSimpleList("socialLinks", rows, (item) => `
+    <i data-lucide="share-2" aria-hidden="true"></i>
+    <h3>${escapeHtml(item.platform || "Social Link")}</h3>
+    <p>${escapeHtml(item.url || "No URL set")} • Icon: ${escapeHtml(item.icon || "website")}</p>
+    <small>Order ${Number(item.order || 0)} ${item.active === false ? "• Hidden" : "• Visible"}</small>
+  `);
+}
+
 function renderFaqs(rows) {
   renderSimpleList("faqs", rows, (item) => `
     <h3>${escapeHtml(item.question || "Untitled question")}</h3>
@@ -342,6 +354,7 @@ function collectionToFirestore(collection) {
     gallery: CMS_COLLECTIONS.gallery,
     testimonials: CMS_COLLECTIONS.testimonials,
     publications: CMS_COLLECTIONS.publications,
+    socialLinks: CMS_COLLECTIONS.socialLinks,
     faqs: CMS_COLLECTIONS.faqs,
   }[collection];
 }
@@ -380,6 +393,11 @@ async function startSubscriptions() {
   state.unsubs.push(await subscribeCollection(CMS_COLLECTIONS.publications, (rows) => {
     state.records.publications = rows;
     renderPublications(rows);
+  }));
+
+  state.unsubs.push(await subscribeCollection(CMS_COLLECTIONS.socialLinks, (rows) => {
+    state.records.socialLinks = rows;
+    renderSocialLinks(rows);
   }));
 
   state.unsubs.push(await subscribeCollection(CMS_COLLECTIONS.faqs, (rows) => {
@@ -422,6 +440,7 @@ function bindEvents() {
         ...starterContent.gallery.map(([id, data]) => saveDocument(CMS_COLLECTIONS.gallery, data, id)),
         ...starterContent.testimonials.map(([id, data]) => saveDocument(CMS_COLLECTIONS.testimonials, data, id)),
         ...starterContent.publications.map(([id, data]) => saveDocument(CMS_COLLECTIONS.publications, data, id)),
+        ...starterContent.socialLinks.map(([id, data]) => saveDocument(CMS_COLLECTIONS.socialLinks, data, id)),
         ...starterContent.faqs.map(([id, data]) => saveDocument(CMS_COLLECTIONS.faqs, data, id)),
       ]);
       await loadSettingsForm();
