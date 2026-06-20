@@ -72,6 +72,14 @@
               <i data-lucide="inbox" aria-hidden="true"></i>
               Appointments
             </button>
+            <button type="button" data-admin-view="home">
+              <i data-lucide="home" aria-hidden="true"></i>
+              Home
+            </button>
+            <button type="button" data-admin-view="about">
+              <i data-lucide="user-round" aria-hidden="true"></i>
+              About
+            </button>
             <button type="button" data-admin-view="services">
               <i data-lucide="stethoscope" aria-hidden="true"></i>
               Services
@@ -92,9 +100,13 @@
               <i data-lucide="circle-help" aria-hidden="true"></i>
               FAQ
             </button>
-            <button type="button" data-admin-view="settings">
-              <i data-lucide="settings" aria-hidden="true"></i>
-              Clinic Settings
+            <button type="button" data-admin-view="contact">
+              <i data-lucide="map-pin" aria-hidden="true"></i>
+              Contact
+            </button>
+            <button type="button" data-admin-view="socialLinks">
+              <i data-lucide="share-2" aria-hidden="true"></i>
+              Social Links
             </button>
           </nav>
 
@@ -132,6 +144,126 @@
               </div>
             </div>
             <div class="admin-list" data-list="appointments"></div>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="home">
+            <div class="admin-section-heading">
+              <div>
+                <h2>Home</h2>
+                <p>Control the hero section, doctor identity, and main website buttons.</p>
+              </div>
+            </div>
+            <form class="admin-editor" data-settings-form>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Doctor Identity</h3>
+                  <p>Shown in the header, hero, and footer brand areas.</p>
+                </div>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Doctor Name</label>
+                  <input name="doctor.name" required placeholder="Dr Asif Mushtaq" />
+                </div>
+                <div>
+                  <label>Credentials</label>
+                  <input name="doctor.credentials" placeholder="FCPS Prosthodontics, BDS" />
+                </div>
+              </div>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Hero Copy</h3>
+                  <p>Main headline and description visitors see first.</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Hero Headline</label>
+                <input name="hero.headline" required placeholder="Advanced Prosthodontic & Implant Rehabilitation" />
+              </div>
+              <div class="form-row">
+                <label>Hero Description</label>
+                <textarea name="hero.description" rows="4" required placeholder="Short hero paragraph"></textarea>
+              </div>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Hero Buttons</h3>
+                  <p>Change button labels, links, and visibility without editing code.</p>
+                </div>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Primary Button Text</label>
+                  <input name="hero.primaryButtonText" placeholder="Book Appointment" />
+                </div>
+                <div>
+                  <label>Primary Button Link</label>
+                  <input name="hero.primaryButtonUrl" placeholder="#appointment" />
+                </div>
+              </div>
+              <label class="admin-check compact">
+                <input name="hero.primaryButtonVisible" type="checkbox" checked />
+                Show primary button on website
+              </label>
+              <div class="form-row two-columns">
+                <div>
+                  <label>WhatsApp Button Text</label>
+                  <input name="hero.whatsappButtonText" placeholder="WhatsApp Consultation" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="hero.whatsappButtonVisible" type="checkbox" checked />
+                  Show WhatsApp button
+                </label>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>CV Button Text</label>
+                  <input name="hero.cvButtonText" placeholder="Download CV" />
+                </div>
+                <div>
+                  <label>CV File Path or URL</label>
+                  <input name="hero.cvButtonPath" placeholder="assets/docs/asif-mushtaq-prosthodontist-cv.pdf" />
+                </div>
+              </div>
+              <label class="admin-check compact">
+                <input name="hero.cvButtonVisible" type="checkbox" checked />
+                Show CV download button
+              </label>
+              <button class="btn btn-primary" type="submit">Save Home Section</button>
+            </form>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="about">
+            <div class="admin-section-heading">
+              <div>
+                <h2>About</h2>
+                <p>Update the doctor profile text shown in the About section.</p>
+              </div>
+            </div>
+            <form class="admin-editor" data-settings-form>
+              <div class="form-row">
+                <label>About Heading</label>
+                <input name="about.heading" required placeholder="Specialized Prosthodontic Care With Academic Precision" />
+              </div>
+              <div class="form-row">
+                <label>About Description</label>
+                <textarea name="about.description" rows="4" required placeholder="Short section introduction"></textarea>
+              </div>
+              <div class="form-row">
+                <label>Profile Summary</label>
+                <textarea name="about.profileSummary" rows="4" required placeholder="Doctor profile summary"></textarea>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Consultation Link Text</label>
+                  <input name="about.consultationLinkText" placeholder="Request a consultation" />
+                </div>
+                <div>
+                  <label>CV Link Text</label>
+                  <input name="about.cvLinkText" placeholder="Download professional CV" />
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">Save About Section</button>
+            </form>
           </section>
 
           <section class="admin-panel" data-admin-panel="services">
@@ -366,32 +498,14 @@
             <div class="admin-list" data-list="faqs"></div>
           </section>
 
-          <section class="admin-panel" data-admin-panel="settings">
+          <section class="admin-panel" data-admin-panel="contact">
             <div class="admin-section-heading">
               <div>
-                <h2>Clinic Settings</h2>
-                <p>Update website copy, doctor details, contact info, hours, and social links.</p>
+                <h2>Contact</h2>
+                <p>Update clinic address, phone, WhatsApp, email, map link, and working hours.</p>
               </div>
             </div>
             <form class="admin-editor" data-settings-form>
-              <div class="form-row two-columns">
-                <div>
-                  <label>Doctor Name</label>
-                  <input name="doctor.name" required placeholder="Dr Asif Mushtaq" />
-                </div>
-                <div>
-                  <label>Credentials</label>
-                  <input name="doctor.credentials" placeholder="FCPS Prosthodontics, BDS" />
-                </div>
-              </div>
-              <div class="form-row">
-                <label>Hero Headline</label>
-                <input name="hero.headline" required placeholder="Advanced Prosthodontic & Implant Rehabilitation" />
-              </div>
-              <div class="form-row">
-                <label>Hero Description</label>
-                <textarea name="hero.description" rows="3" required placeholder="Short hero paragraph"></textarea>
-              </div>
               <div class="form-row two-columns">
                 <div>
                   <label>Phone</label>
@@ -412,6 +526,10 @@
                   <input name="contact.address" required placeholder="857-A, J-2 Block Market, Phase 2, Johar Town, Lahore" />
                 </div>
               </div>
+              <div class="form-row">
+                <label>Map Query / Location Text</label>
+                <input name="contact.mapQuery" placeholder="857-A J-2 Block Market Phase 2 Johar Town Lahore" />
+              </div>
               <div class="form-row two-columns">
                 <div>
                   <label>Hours Line 1</label>
@@ -422,8 +540,17 @@
                   <input name="hours.weekend" placeholder="Sat: 10:00 AM - 4:00 PM" />
                 </div>
               </div>
-              <button class="btn btn-primary" type="submit">Save Clinic Settings</button>
+              <button class="btn btn-primary" type="submit">Save Contact Section</button>
             </form>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="socialLinks">
+            <div class="admin-section-heading">
+              <div>
+                <h2>Social Links</h2>
+                <p>Manage profile links and choose which icons appear in the public footer.</p>
+              </div>
+            </div>
             <div class="admin-subsection-heading">
               <div>
                 <h3>Social Media Links</h3>

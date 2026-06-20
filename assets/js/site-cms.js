@@ -109,13 +109,30 @@ function applySettings(settings) {
     element.textContent = value;
   });
 
+  applyVisibilitySettings(settings);
+  applyLinkSettings(settings);
   setLink("[data-cms-phone-link]", `tel:${settings.contact?.phone || ""}`);
   setLink("[data-cms-email-link]", `mailto:${settings.contact?.email || ""}`);
   setLink("[data-cms-whatsapp-link]", buildWhatsappUrl(settings.contact?.whatsapp, settings.doctor?.name));
-  setLink("[data-cms-map-link]", `https://maps.google.com/?q=${encodeURIComponent(settings.contact?.address || "")}`);
+  setLink("[data-cms-map-link]", `https://maps.google.com/?q=${encodeURIComponent(settings.contact?.mapQuery || settings.contact?.address || "")}`);
 
   document.querySelectorAll("[data-cms-social='instagram']").forEach((link) => setHref(link, settings.social?.instagram));
   document.querySelectorAll("[data-cms-social='tiktok']").forEach((link) => setHref(link, settings.social?.tiktok));
+}
+
+function applyVisibilitySettings(settings) {
+  document.querySelectorAll("[data-cms-visible-field]").forEach((element) => {
+    const value = getNested(settings, element.dataset.cmsVisibleField);
+    if (value === undefined || value === null) return;
+    element.hidden = value === false;
+  });
+}
+
+function applyLinkSettings(settings) {
+  document.querySelectorAll("[data-cms-link-field]").forEach((link) => {
+    const href = getNested(settings, link.dataset.cmsLinkField);
+    setHref(link, href);
+  });
 }
 
 const SOCIAL_ICON_RENDERERS = {

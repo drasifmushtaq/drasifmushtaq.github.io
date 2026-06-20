@@ -45,12 +45,30 @@ const starterContent = {
       headline: "Advanced Prosthodontic & Implant Rehabilitation",
       description:
         "Licensed Senior Registrar Prosthodontist and Assistant Professor providing comprehensive oral rehabilitation, implant-supported prostheses, crowns, veneers, dentures, and esthetic restorative care.",
+      primaryButtonText: "Book Appointment",
+      primaryButtonUrl: "#appointment",
+      primaryButtonVisible: true,
+      whatsappButtonText: "WhatsApp Consultation",
+      whatsappButtonVisible: true,
+      cvButtonText: "Download CV",
+      cvButtonPath: "assets/docs/asif-mushtaq-prosthodontist-cv.pdf",
+      cvButtonVisible: true,
+    },
+    about: {
+      heading: "Specialized Prosthodontic Care With Academic Precision",
+      description:
+        "Dr Asif is a licensed Senior Registrar Prosthodontist with FCPS Prosthodontics, BDS, SCFHS registration, and teaching experience as an Assistant Professor.",
+      profileSummary:
+        "Prosthodontist focused on comprehensive oral rehabilitation, implant-supported prostheses, esthetic fixed restorations, dentures, and multidisciplinary treatment planning.",
+      consultationLinkText: "Request a consultation",
+      cvLinkText: "Download professional CV",
     },
     contact: {
       phone: "+92 334 9844763",
       whatsapp: "+92 334 9844763",
       email: "dr.asif100@yahoo.com",
       address: "857-A, J-2 Block Market, Phase 2, Johar Town, Lahore",
+      mapQuery: "857-A J-2 Block Market Phase 2 Johar Town Lahore",
     },
     hours: {
       weekdays: "9:00 AM - 6:00 PM",
@@ -139,22 +157,26 @@ function formToObject(form) {
   new FormData(form).forEach((value, key) => {
     if (value instanceof File) return;
     if (key === "id") return;
-    if (key.includes(".")) {
-      setNested(data, key, value);
-    } else {
-      data[key] = value;
-    }
+    setFormValue(data, key, value);
   });
 
   $$("input[type='checkbox']", form).forEach((input) => {
-    data[input.name] = input.checked;
+    setFormValue(data, input.name, input.checked);
   });
 
   $$("input[type='number']", form).forEach((input) => {
-    if (input.name) data[input.name] = Number(input.value || 0);
+    if (input.name) setFormValue(data, input.name, Number(input.value || 0));
   });
 
   return data;
+}
+
+function setFormValue(data, key, value) {
+  if (key.includes(".")) {
+    setNested(data, key, value);
+  } else {
+    data[key] = value;
+  }
 }
 
 function setNested(target, path, value) {
@@ -171,7 +193,7 @@ function getNested(target, path) {
   return path.split(".").reduce((value, key) => value?.[key], target);
 }
 
-function fillForm(form, data) {
+function fillForm(form, data, options = {}) {
   $$("input, textarea, select", form).forEach((input) => {
     if (!input.name) return;
     if (input.type === "file") {
@@ -179,12 +201,14 @@ function fillForm(form, data) {
       return;
     }
     if (input.type === "checkbox") {
-      input.checked = Boolean(data[input.name]);
+      input.checked = Boolean(getNested(data, input.name) ?? data[input.name]);
       return;
     }
     input.value = getNested(data, input.name) ?? data[input.name] ?? "";
   });
-  form.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (options.scroll !== false) {
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function formatDate(value) {
@@ -366,10 +390,10 @@ function collectionToFirestore(collection) {
 }
 
 async function loadSettingsForm() {
-  const form = $("[data-settings-form]");
-  if (!form) return;
+  const forms = $$("[data-settings-form]");
+  if (!forms.length) return;
   const settings = await getSiteSettings();
-  if (settings) fillForm(form, settings);
+  if (settings) forms.forEach((form) => fillForm(form, settings, { scroll: false }));
 }
 
 async function startSubscriptions() {
@@ -465,14 +489,16 @@ function bindEvents() {
     });
   });
 
-  $("[data-settings-form]")?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    try {
-      await saveSiteSettings({ ...formToObject(event.currentTarget), contentVersion: CURRENT_CONTENT_VERSION });
-      setStatus("Clinic settings saved.", "success");
-    } catch (error) {
-      setStatus(error.message, "error");
-    }
+  $$("[data-settings-form]").forEach((form) => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await saveSiteSettings({ ...formToObject(event.currentTarget), contentVersion: CURRENT_CONTENT_VERSION });
+        setStatus("Section settings saved.", "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
   });
 
   document.addEventListener("click", async (event) => {

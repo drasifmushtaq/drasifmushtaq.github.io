@@ -200,6 +200,22 @@ test("footer social links use recognizable brand icons and CMS-managed URLs", ()
   assert.doesNotMatch(html, /data-lucide="(?:camera|message-square|briefcase-business)"/);
 });
 
+test("footer developer credit is hardcoded and not editable in admin", () => {
+  const html = readHtml();
+  const admin = readFileSync(adminPath, "utf8");
+  const adminJs = readFileSync(adminJsPath, "utf8");
+  const css = readFileSync(stylesPath, "utf8");
+
+  assert.match(html, /Developed by/);
+  assert.match(html, /Musfora Software Developers/);
+  assert.match(html, /https:\/\/www\.linkedin\.com\/company\/musfora/);
+  assert.doesNotMatch(html, /Musfora Software Company/);
+  assert.doesNotMatch(admin, /Musfora|Developed by|developer credit|copyright/i);
+  assert.doesNotMatch(adminJs, /Musfora|Developed by|developer credit|copyright/i);
+  assert.match(css, /\.footer-bottom\s*\{[^}]*justify-content:\s*space-between/s);
+  assert.match(css, /@media \(max-width:\s*760px\)\s*\{[\s\S]*\.footer-bottom\s*\{[^}]*text-align:\s*center/s);
+});
+
 test("public site is wired for Firebase CMS hydration and appointment storage", () => {
   const html = readHtml();
   const siteCms = readFileSync(siteCmsPath, "utf8");
@@ -215,9 +231,16 @@ test("public site is wired for Firebase CMS hydration and appointment storage", 
   assert.match(html, /data-cms-section="publications"/);
   assert.match(html, /data-cms-field="hero\.headline"/);
   assert.match(html, /data-cms-field="contact\.phone"/);
+  assert.match(html, /data-cms-visible-field="hero\.primaryButtonVisible"/);
+  assert.match(html, /data-cms-visible-field="hero\.whatsappButtonVisible"/);
+  assert.match(html, /data-cms-visible-field="hero\.cvButtonVisible"/);
+  assert.match(html, /data-cms-link-field="hero\.primaryButtonUrl"/);
+  assert.match(html, /data-cms-link-field="hero\.cvButtonPath"/);
   assert.match(html, /data-appointment-form/);
   assert.match(siteCms, /CURRENT_CONTENT_VERSION/);
   assert.match(siteCms, /isCurrentCmsContent/);
+  assert.match(siteCms, /applyVisibilitySettings/);
+  assert.match(siteCms, /applyLinkSettings/);
   assert.match(siteCms, /renderPublications/);
   assert.match(siteCms, /CMS_COLLECTIONS\.publications/);
   assert.match(mainJs, /setupScrollReveals/);
@@ -243,12 +266,15 @@ test("admin dashboard and Firebase modules exist with required capabilities", ()
   for (const text of [
     "Admin Login",
     "Appointments",
+    "Home",
+    "About",
     "Services",
     "Gallery",
     "Testimonials",
     "Publications",
     "FAQ",
-    "Clinic Settings",
+    "Contact",
+    "Social Links",
     "data-admin-view",
   ]) {
     assert.match(admin, new RegExp(text));
@@ -278,6 +304,27 @@ test("admin dashboard and Firebase modules exist with required capabilities", ()
   assert.match(siteCms, /loadPublicCms/);
   assert.match(siteCms, /saveAppointmentRequest/);
   assert.match(adminJs, /contentVersion:\s*CURRENT_CONTENT_VERSION/);
+  assert.match(adminJs, /hero:\s*\{/);
+  assert.match(adminJs, /primaryButtonVisible:\s*true/);
+  assert.match(adminJs, /cvButtonVisible:\s*true/);
+  assert.match(adminJs, /setFormValue\(data, input\.name, input\.checked\)/);
+  assert.match(adminJs, /input\.checked = Boolean\(getNested\(data, input\.name\) \?\? data\[input\.name\]\)/);
+  assert.match(admin, /data-admin-view="home"/);
+  assert.match(admin, /data-admin-panel="home"/);
+  assert.match(admin, /data-admin-view="about"/);
+  assert.match(admin, /data-admin-panel="about"/);
+  assert.match(admin, /data-admin-view="contact"/);
+  assert.match(admin, /data-admin-panel="contact"/);
+  assert.match(admin, /data-admin-view="socialLinks"/);
+  assert.match(admin, /data-admin-panel="socialLinks"/);
+  assert.match(admin, /name="hero\.primaryButtonText"/);
+  assert.match(admin, /name="hero\.primaryButtonUrl"/);
+  assert.match(admin, /name="hero\.primaryButtonVisible"/);
+  assert.match(admin, /name="hero\.cvButtonText"/);
+  assert.match(admin, /name="hero\.cvButtonPath"/);
+  assert.match(admin, /name="hero\.cvButtonVisible"/);
+  assert.match(admin, /name="about\.heading"/);
+  assert.match(admin, /name="about\.profileSummary"/);
   assert.match(admin, /data-admin-view="publications"/);
   assert.match(admin, /data-admin-form="publications"/);
   assert.match(admin, /Add \/ Edit Publication/);
