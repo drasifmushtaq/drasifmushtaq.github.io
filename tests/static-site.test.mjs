@@ -230,6 +230,11 @@ test("public site is wired for Firebase CMS hydration and appointment storage", 
   assert.match(html, /data-cms-section="faqs"/);
   assert.match(html, /data-cms-section="publications"/);
   assert.match(html, /data-cms-field="header\.subtitle"/);
+  assert.match(html, /data-cms-field="footer\.subtitle"/);
+  assert.match(html, /data-cms-field="footer\.description"/);
+  assert.match(html, /data-cms-src-field="footer\.logoUrl"/);
+  assert.match(html, /data-cms-alt-field="footer\.logoAlt"/);
+  assert.match(html, /data-cms-link-field="footer\.brandUrl"/);
   assert.match(html, /data-cms-field="header\.nav\.home\.label"/);
   assert.match(html, /data-cms-field="header\.ctaText"/);
   assert.match(html, /data-cms-visible-field="header\.ctaVisible"/);
@@ -292,6 +297,7 @@ test("admin dashboard and Firebase modules exist with required capabilities", ()
     "FAQ",
     "Contact",
     "Social Links",
+    "Footer",
     "data-admin-view",
   ]) {
     assert.match(admin, new RegExp(text));
@@ -323,6 +329,7 @@ test("admin dashboard and Firebase modules exist with required capabilities", ()
   assert.match(adminJs, /contentVersion:\s*CURRENT_CONTENT_VERSION/);
   assert.match(adminJs, /hero:\s*\{/);
   assert.match(adminJs, /header:\s*\{/);
+  assert.match(adminJs, /footer:\s*\{/);
   assert.match(adminJs, /homeHighlights:\s*\{/);
   assert.match(adminJs, /primaryButtonVisible:\s*true/);
   assert.match(adminJs, /cvButtonVisible:\s*true/);
@@ -336,6 +343,13 @@ test("admin dashboard and Firebase modules exist with required capabilities", ()
   assert.match(admin, /data-admin-panel="contact"/);
   assert.match(admin, /data-admin-view="socialLinks"/);
   assert.match(admin, /data-admin-panel="socialLinks"/);
+  assert.match(admin, /data-admin-view="footer"/);
+  assert.match(admin, /data-admin-panel="footer"/);
+  assert.match(admin, /name="footer\.subtitle"/);
+  assert.match(admin, /name="footer\.description"/);
+  assert.match(admin, /name="footer\.brandUrl"/);
+  assert.match(admin, /name="footer\.logoUrl"/);
+  assert.match(admin, /name="footer\.logoAlt"/);
   assert.match(admin, /name="hero\.primaryButtonText"/);
   assert.match(admin, /name="hero\.primaryButtonUrl"/);
   assert.match(admin, /name="hero\.primaryButtonVisible"/);

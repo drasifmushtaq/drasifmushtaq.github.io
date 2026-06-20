@@ -59,6 +59,13 @@ const starterContent = {
         contact: { label: "Contact", url: "#contact", visible: true },
       },
     },
+    footer: {
+      brandUrl: "#home",
+      logoUrl: "assets/images/dr-asif-logo.jpg",
+      logoAlt: "Dr Asif Dental & Implant Center logo",
+      subtitle: "Senior Registrar Prosthodontist",
+      description: "Specialist prosthodontic and implant rehabilitation for healthy, confident smiles.",
+    },
     hero: {
       eyebrow: "FCPS Prosthodontics Care",
       eyebrowIcon: "badge-check",

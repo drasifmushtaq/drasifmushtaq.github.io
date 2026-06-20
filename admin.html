@@ -108,6 +108,10 @@
               <i data-lucide="share-2" aria-hidden="true"></i>
               Social Links
             </button>
+            <button type="button" data-admin-view="footer">
+              <i data-lucide="panel-bottom" aria-hidden="true"></i>
+              Footer
+            </button>
           </nav>
 
           <button class="btn btn-secondary admin-signout" type="button" data-signout>
@@ -1062,6 +1066,52 @@
               </div>
             </div>
             <div class="admin-list" data-list="socialLinks"></div>
+          </section>
+
+          <section class="admin-panel" data-admin-panel="footer">
+            <div class="admin-section-heading">
+              <div>
+                <h2>Footer</h2>
+                <p>Update the doctor brand content shown at the top of the footer.</p>
+              </div>
+            </div>
+            <form class="admin-editor" data-settings-form>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Footer Brand</h3>
+                  <p>These fields control the footer logo, doctor name, subtitle, and short description.</p>
+                </div>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Doctor Name</label>
+                  <input name="doctor.name" required placeholder="Dr Asif Mushtaq" />
+                </div>
+                <div>
+                  <label>Footer Brand Link</label>
+                  <input name="footer.brandUrl" placeholder="#home" />
+                </div>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Footer Logo Path or URL</label>
+                  <input name="footer.logoUrl" placeholder="assets/images/dr-asif-logo.jpg" />
+                </div>
+                <div>
+                  <label>Footer Logo Alt Text</label>
+                  <input name="footer.logoAlt" placeholder="Dr Asif Dental & Implant Center logo" />
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Footer Subtitle</label>
+                <input name="footer.subtitle" placeholder="Senior Registrar Prosthodontist" />
+              </div>
+              <div class="form-row">
+                <label>Footer Description</label>
+                <textarea name="footer.description" rows="3" placeholder="Specialist prosthodontic and implant rehabilitation for healthy, confident smiles."></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Save Footer Section</button>
+            </form>
           </section>
         </div>
       </section>
