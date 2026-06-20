@@ -546,6 +546,20 @@
               </div>
             </div>
             <form class="admin-editor" data-settings-form>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Section Copy</h3>
+                  <p>Introductory text at the top of the About section.</p>
+                </div>
+              </div>
+              <label class="admin-check compact">
+                <input name="about.sectionVisible" type="checkbox" checked />
+                Show About section on website
+              </label>
+              <div class="form-row">
+                <label>About Eyebrow</label>
+                <input name="about.eyebrow" placeholder="About the Doctor" />
+              </div>
               <div class="form-row">
                 <label>About Heading</label>
                 <input name="about.heading" required placeholder="Specialized Prosthodontic Care With Academic Precision" />
@@ -554,19 +568,161 @@
                 <label>About Description</label>
                 <textarea name="about.description" rows="4" required placeholder="Short section introduction"></textarea>
               </div>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Profile Card</h3>
+                  <p>Image, short biography, and profile links.</p>
+                </div>
+              </div>
+              <div class="form-row two-columns">
+                <div>
+                  <label>Profile Image Path or URL</label>
+                  <input name="about.profileImageUrl" placeholder="https://images.unsplash.com/..." />
+                </div>
+                <div>
+                  <label>Profile Image Alt Text</label>
+                  <input name="about.profileImageAlt" placeholder="Dentist reviewing a dental X-ray before treatment planning" />
+                </div>
+              </div>
               <div class="form-row">
                 <label>Profile Summary</label>
                 <textarea name="about.profileSummary" rows="4" required placeholder="Doctor profile summary"></textarea>
               </div>
-              <div class="form-row two-columns">
+              <div class="form-row three-columns">
                 <div>
                   <label>Consultation Link Text</label>
                   <input name="about.consultationLinkText" placeholder="Request a consultation" />
                 </div>
                 <div>
+                  <label>Consultation Link URL</label>
+                  <input name="about.consultationLinkUrl" placeholder="#appointment" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.consultationLinkVisible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row three-columns">
+                <div>
                   <label>CV Link Text</label>
                   <input name="about.cvLinkText" placeholder="Download professional CV" />
                 </div>
+                <div>
+                  <label>CV Link Path or URL</label>
+                  <input name="about.cvLinkUrl" placeholder="assets/docs/asif-mushtaq-prosthodontist-cv.pdf" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.cvLinkVisible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Credential Cards</h3>
+                  <p>Three cards shown under the profile section.</p>
+                </div>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Credential 1 Icon</label>
+                  <input name="about.credential1Icon" placeholder="graduation-cap" />
+                </div>
+                <div>
+                  <label>Credential 1 Title</label>
+                  <input name="about.credential1Title" placeholder="Education" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.credential1Visible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row">
+                <label>Credential 1 Description</label>
+                <textarea name="about.credential1Description" rows="3" placeholder="Education details"></textarea>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Credential 2 Icon</label>
+                  <input name="about.credential2Icon" placeholder="award" />
+                </div>
+                <div>
+                  <label>Credential 2 Title</label>
+                  <input name="about.credential2Title" placeholder="Licensure" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.credential2Visible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row">
+                <label>Credential 2 Description</label>
+                <textarea name="about.credential2Description" rows="3" placeholder="Licensure details"></textarea>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Credential 3 Icon</label>
+                  <input name="about.credential3Icon" placeholder="briefcase-medical" />
+                </div>
+                <div>
+                  <label>Credential 3 Title</label>
+                  <input name="about.credential3Title" placeholder="Experience" />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.credential3Visible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row">
+                <label>Credential 3 Description</label>
+                <textarea name="about.credential3Description" rows="3" placeholder="Experience details"></textarea>
+              </div>
+              <div class="admin-subsection-heading inline">
+                <div>
+                  <h3>Timeline</h3>
+                  <p>Achievement timeline shown at the bottom of the About section.</p>
+                </div>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Timeline 1 Label</label>
+                  <input name="about.timeline1Label" placeholder="2010-2016" />
+                </div>
+                <div>
+                  <label>Timeline 1 Text</label>
+                  <input name="about.timeline1Text" placeholder="House Surgeon and General Dental Practitioner experience..." />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.timeline1Visible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Timeline 2 Label</label>
+                  <input name="about.timeline2Label" placeholder="2023" />
+                </div>
+                <div>
+                  <label>Timeline 2 Text</label>
+                  <input name="about.timeline2Text" placeholder="Completed FCPS Prosthodontics..." />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.timeline2Visible" type="checkbox" checked />
+                  Show
+                </label>
+              </div>
+              <div class="form-row three-columns">
+                <div>
+                  <label>Timeline 3 Label</label>
+                  <input name="about.timeline3Label" placeholder="2024-Current" />
+                </div>
+                <div>
+                  <label>Timeline 3 Text</label>
+                  <input name="about.timeline3Text" placeholder="Senior Registrar in Riyadh..." />
+                </div>
+                <label class="admin-check compact">
+                  <input name="about.timeline3Visible" type="checkbox" checked />
+                  Show
+                </label>
               </div>
               <button class="btn btn-primary" type="submit">Save About Section</button>
             </form>

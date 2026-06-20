@@ -189,10 +189,10 @@
         </div>
       </section>
 
-      <section class="section about-section" id="about" aria-labelledby="about-title">
+      <section class="section about-section" id="about" aria-labelledby="about-title" data-cms-visible-field="about.sectionVisible">
         <div class="container about-grid">
           <div class="section-heading">
-            <p class="eyebrow">About the Doctor</p>
+            <p class="eyebrow" data-cms-field="about.eyebrow">About the Doctor</p>
             <h2 id="about-title" data-cms-field="about.heading">Specialized Prosthodontic Care With Academic Precision</h2>
             <p data-cms-field="about.description">
               Dr Asif is a licensed Senior Registrar Prosthodontist with FCPS Prosthodontics, BDS, SCFHS registration, and teaching experience as an Assistant Professor.
@@ -203,17 +203,19 @@
             <img
               src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=80"
               alt="Dentist reviewing a dental X-ray before treatment planning"
+              data-cms-src-field="about.profileImageUrl"
+              data-cms-alt-field="about.profileImageAlt"
             />
             <div class="profile-content">
               <h3 data-cms-field="doctor.name">Dr Asif Mushtaq</h3>
               <p data-cms-field="about.profileSummary">
                 Prosthodontist focused on comprehensive oral rehabilitation, implant-supported prostheses, esthetic fixed restorations, dentures, and multidisciplinary treatment planning.
               </p>
-              <a href="#appointment" class="text-link">
+              <a href="#appointment" class="text-link" data-cms-link-field="about.consultationLinkUrl" data-cms-visible-field="about.consultationLinkVisible">
                 <span data-cms-field="about.consultationLinkText">Request a consultation</span>
                 <i data-lucide="arrow-up-right" aria-hidden="true"></i>
               </a>
-              <a href="assets/docs/asif-mushtaq-prosthodontist-cv.pdf" class="text-link" download data-cms-visible-field="hero.cvButtonVisible" data-cms-link-field="hero.cvButtonPath">
+              <a href="assets/docs/asif-mushtaq-prosthodontist-cv.pdf" class="text-link" download data-cms-visible-field="about.cvLinkVisible" data-cms-link-field="about.cvLinkUrl">
                 <span data-cms-field="about.cvLinkText">Download professional CV</span>
                 <i data-lucide="file-down" aria-hidden="true"></i>
               </a>
@@ -221,35 +223,35 @@
           </div>
 
           <div class="credentials">
-            <article>
-              <i data-lucide="graduation-cap" aria-hidden="true"></i>
-              <h3>Education</h3>
-              <p>FCPS Prosthodontics from College of Physicians &amp; Surgeons Pakistan and BDS from de'Montmorency College of Dentistry.</p>
+            <article data-cms-visible-field="about.credential1Visible">
+              <i data-lucide="graduation-cap" data-cms-icon-field="about.credential1Icon" aria-hidden="true"></i>
+              <h3 data-cms-field="about.credential1Title">Education</h3>
+              <p data-cms-field="about.credential1Description">FCPS Prosthodontics from College of Physicians &amp; Surgeons Pakistan and BDS from de'Montmorency College of Dentistry.</p>
             </article>
-            <article>
-              <i data-lucide="award" aria-hidden="true"></i>
-              <h3>Licensure</h3>
-              <p>SCFHS (14RD0039936) licensed Senior Registrar Prosthodontist with consultant eligibility expected in July 2026.</p>
+            <article data-cms-visible-field="about.credential2Visible">
+              <i data-lucide="award" data-cms-icon-field="about.credential2Icon" aria-hidden="true"></i>
+              <h3 data-cms-field="about.credential2Title">Licensure</h3>
+              <p data-cms-field="about.credential2Description">SCFHS (14RD0039936) licensed Senior Registrar Prosthodontist with consultant eligibility expected in July 2026.</p>
             </article>
-            <article>
-              <i data-lucide="briefcase-medical" aria-hidden="true"></i>
-              <h3>Experience</h3>
-              <p>Assistant Professor and Senior Registrar experience across Lahore and Riyadh with complex prosthodontic case planning.</p>
+            <article data-cms-visible-field="about.credential3Visible">
+              <i data-lucide="briefcase-medical" data-cms-icon-field="about.credential3Icon" aria-hidden="true"></i>
+              <h3 data-cms-field="about.credential3Title">Experience</h3>
+              <p data-cms-field="about.credential3Description">Assistant Professor and Senior Registrar experience across Lahore and Riyadh with complex prosthodontic case planning.</p>
             </article>
           </div>
 
           <div class="timeline" aria-label="Achievement timeline">
-            <div class="timeline-item">
-              <span>2010-2016</span>
-              <p>House Surgeon and General Dental Practitioner experience in Lahore and Riyadh.</p>
+            <div class="timeline-item" data-cms-visible-field="about.timeline1Visible">
+              <span data-cms-field="about.timeline1Label">2010-2016</span>
+              <p data-cms-field="about.timeline1Text">House Surgeon and General Dental Practitioner experience in Lahore and Riyadh.</p>
             </div>
-            <div class="timeline-item">
-              <span>2023</span>
-              <p>Completed FCPS Prosthodontics after postgraduate residency at Punjab Dental Hospital.</p>
+            <div class="timeline-item" data-cms-visible-field="about.timeline2Visible">
+              <span data-cms-field="about.timeline2Label">2023</span>
+              <p data-cms-field="about.timeline2Text">Completed FCPS Prosthodontics after postgraduate residency at Punjab Dental Hospital.</p>
             </div>
-            <div class="timeline-item">
-              <span>2024-Current</span>
-              <p>Senior Registrar in Riyadh and Assistant Professor at Akhtar Saeed Medical &amp; Dental College.</p>
+            <div class="timeline-item" data-cms-visible-field="about.timeline3Visible">
+              <span data-cms-field="about.timeline3Label">2024-Current</span>
+              <p data-cms-field="about.timeline3Text">Senior Registrar in Riyadh and Assistant Professor at Akhtar Saeed Medical &amp; Dental College.</p>
             </div>
           </div>
         </div>
