@@ -949,6 +949,10 @@ p {
   gap: 18px;
 }
 
+.three-columns {
+  gap: 18px;
+}
+
 label {
   color: var(--text);
   font-size: 0.9rem;
@@ -1286,6 +1290,11 @@ textarea:focus {
 
   .two-columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .three-columns {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
   }
 
   .gallery-grid,

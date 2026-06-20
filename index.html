@@ -70,11 +70,11 @@
       <nav class="nav container" aria-label="Primary navigation">
         <a class="brand" href="#home" aria-label="Dr Asif Mushtaq home">
           <span class="brand-mark" aria-hidden="true">
-            <img src="assets/images/dr-asif-logo.jpg" alt="" />
+            <img src="assets/images/dr-asif-logo.jpg" alt="" data-cms-src-field="header.logoUrl" data-cms-alt-field="header.logoAlt" />
           </span>
           <span>
             <strong data-cms-field="doctor.name">Dr Asif Mushtaq</strong>
-            <small>Senior Registrar Prosthodontist</small>
+            <small data-cms-field="header.subtitle">Senior Registrar Prosthodontist</small>
           </span>
         </a>
 
@@ -83,18 +83,18 @@
         </button>
 
         <div class="nav-menu" data-nav-menu>
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#publications">Publications</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
+          <a href="#home" data-cms-field="header.nav.home.label" data-cms-link-field="header.nav.home.url" data-cms-visible-field="header.nav.home.visible">Home</a>
+          <a href="#about" data-cms-field="header.nav.about.label" data-cms-link-field="header.nav.about.url" data-cms-visible-field="header.nav.about.visible">About</a>
+          <a href="#services" data-cms-field="header.nav.services.label" data-cms-link-field="header.nav.services.url" data-cms-visible-field="header.nav.services.visible">Services</a>
+          <a href="#gallery" data-cms-field="header.nav.gallery.label" data-cms-link-field="header.nav.gallery.url" data-cms-visible-field="header.nav.gallery.visible">Gallery</a>
+          <a href="#testimonials" data-cms-field="header.nav.testimonials.label" data-cms-link-field="header.nav.testimonials.url" data-cms-visible-field="header.nav.testimonials.visible">Testimonials</a>
+          <a href="#publications" data-cms-field="header.nav.publications.label" data-cms-link-field="header.nav.publications.url" data-cms-visible-field="header.nav.publications.visible">Publications</a>
+          <a href="#faq" data-cms-field="header.nav.faq.label" data-cms-link-field="header.nav.faq.url" data-cms-visible-field="header.nav.faq.visible">FAQ</a>
+          <a href="#contact" data-cms-field="header.nav.contact.label" data-cms-link-field="header.nav.contact.url" data-cms-visible-field="header.nav.contact.visible">Contact</a>
         </div>
 
-        <a class="btn btn-primary nav-cta" href="#appointment">
-          <span>Book Appointment</span>
+        <a class="btn btn-primary nav-cta" href="#appointment" data-cms-link-field="header.ctaUrl" data-cms-visible-field="header.ctaVisible">
+          <span data-cms-field="header.ctaText">Book Appointment</span>
           <i data-lucide="calendar-days" aria-hidden="true"></i>
         </a>
       </nav>
@@ -104,9 +104,9 @@
       <section class="hero section" id="home" aria-labelledby="hero-title">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">
-              <i data-lucide="badge-check" aria-hidden="true"></i>
-              FCPS Prosthodontics Care
+            <p class="eyebrow" data-cms-visible-field="hero.eyebrowVisible">
+              <i data-lucide="badge-check" data-cms-icon-field="hero.eyebrowIcon" aria-hidden="true"></i>
+              <span data-cms-field="hero.eyebrow">FCPS Prosthodontics Care</span>
             </p>
             <h1 id="hero-title" data-cms-field="hero.headline">Advanced Prosthodontic &amp; Implant Rehabilitation</h1>
             <p class="hero-lead" data-cms-field="hero.description">
@@ -138,17 +138,17 @@
               </a>
             </div>
             <div class="hero-trust" aria-label="Trust indicators">
-              <div>
-                <strong>Senior Registrar Prosthodontist</strong>
-                <span>SCFHS (14RD0039936)</span>
+              <div data-cms-visible-field="hero.trust1Visible">
+                <strong data-cms-field="hero.trust1Title">Senior Registrar Prosthodontist</strong>
+                <span data-cms-field="hero.trust1Subtitle">SCFHS (14RD0039936)</span>
               </div>
-              <div>
-                <strong>500+ Implant Restorations</strong>
-                <span>Single-unit and full-arch experience</span>
+              <div data-cms-visible-field="hero.trust2Visible">
+                <strong data-cms-field="hero.trust2Title">500+ Implant Restorations</strong>
+                <span data-cms-field="hero.trust2Subtitle">Single-unit and full-arch experience</span>
               </div>
-              <div>
-                <strong>1000+ Crowns &amp; Veneers</strong>
-                <span>Fixed prosthodontics and smile design</span>
+              <div data-cms-visible-field="hero.trust3Visible">
+                <strong data-cms-field="hero.trust3Title">1000+ Crowns &amp; Veneers</strong>
+                <span data-cms-field="hero.trust3Subtitle">Fixed prosthodontics and smile design</span>
               </div>
             </div>
           </div>
@@ -157,14 +157,16 @@
             <img
               src="https://images.unsplash.com/photo-1588776814594-6d444894210e?auto=format&fit=crop&w=1100&q=80"
               alt="Dental surgeon treating a patient in a modern clinic"
+              data-cms-src-field="hero.imageUrl"
+              data-cms-alt-field="hero.imageAlt"
             />
-            <div class="hero-badge top-badge">
-              <i data-lucide="shield-check" aria-hidden="true"></i>
-              <span>Sterile Surgical Suite</span>
+            <div class="hero-badge top-badge" data-cms-visible-field="hero.topBadgeVisible">
+              <i data-lucide="shield-check" data-cms-icon-field="hero.topBadgeIcon" aria-hidden="true"></i>
+              <span data-cms-field="hero.topBadgeText">Sterile Surgical Suite</span>
             </div>
-            <div class="hero-badge bottom-badge">
-              <i data-lucide="sparkles" aria-hidden="true"></i>
-              <span>Smile Makeovers</span>
+            <div class="hero-badge bottom-badge" data-cms-visible-field="hero.bottomBadgeVisible">
+              <i data-lucide="sparkles" data-cms-icon-field="hero.bottomBadgeIcon" aria-hidden="true"></i>
+              <span data-cms-field="hero.bottomBadgeText">Smile Makeovers</span>
             </div>
           </div>
         </div>
@@ -172,17 +174,17 @@
 
       <section class="trust-strip" aria-label="Clinic highlights">
         <div class="container trust-strip-grid">
-          <div>
-            <i data-lucide="microscope" aria-hidden="true"></i>
-            <span>Digital Implant Planning</span>
+          <div data-cms-visible-field="homeHighlights.item1Visible">
+            <i data-lucide="microscope" data-cms-icon-field="homeHighlights.item1Icon" aria-hidden="true"></i>
+            <span data-cms-field="homeHighlights.item1Text">Digital Implant Planning</span>
           </div>
-          <div>
-            <i data-lucide="heart-pulse" aria-hidden="true"></i>
-            <span>Full Mouth Rehabilitation</span>
+          <div data-cms-visible-field="homeHighlights.item2Visible">
+            <i data-lucide="heart-pulse" data-cms-icon-field="homeHighlights.item2Icon" aria-hidden="true"></i>
+            <span data-cms-field="homeHighlights.item2Text">Full Mouth Rehabilitation</span>
           </div>
-          <div>
-            <i data-lucide="clock-3" aria-hidden="true"></i>
-            <span>Academic &amp; Hospital-Based Experience</span>
+          <div data-cms-visible-field="homeHighlights.item3Visible">
+            <i data-lucide="clock-3" data-cms-icon-field="homeHighlights.item3Icon" aria-hidden="true"></i>
+            <span data-cms-field="homeHighlights.item3Text">Academic &amp; Hospital-Based Experience</span>
           </div>
         </div>
       </section>

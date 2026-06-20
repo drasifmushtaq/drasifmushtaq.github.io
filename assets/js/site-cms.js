@@ -111,6 +111,8 @@ function applySettings(settings) {
 
   applyVisibilitySettings(settings);
   applyLinkSettings(settings);
+  applyImageSettings(settings);
+  applyIconSettings(settings);
   setLink("[data-cms-phone-link]", `tel:${settings.contact?.phone || ""}`);
   setLink("[data-cms-email-link]", `mailto:${settings.contact?.email || ""}`);
   setLink("[data-cms-whatsapp-link]", buildWhatsappUrl(settings.contact?.whatsapp, settings.doctor?.name));
@@ -132,6 +134,25 @@ function applyLinkSettings(settings) {
   document.querySelectorAll("[data-cms-link-field]").forEach((link) => {
     const href = getNested(settings, link.dataset.cmsLinkField);
     setHref(link, href);
+  });
+}
+
+function applyImageSettings(settings) {
+  document.querySelectorAll("[data-cms-src-field]").forEach((image) => {
+    const src = getNested(settings, image.dataset.cmsSrcField);
+    if (src) image.src = src;
+  });
+
+  document.querySelectorAll("[data-cms-alt-field]").forEach((image) => {
+    const alt = getNested(settings, image.dataset.cmsAltField);
+    if (alt !== undefined && alt !== null) image.alt = alt;
+  });
+}
+
+function applyIconSettings(settings) {
+  document.querySelectorAll("[data-cms-icon-field]").forEach((icon) => {
+    const iconName = getNested(settings, icon.dataset.cmsIconField);
+    if (iconName) icon.setAttribute("data-lucide", iconName);
   });
 }
 
