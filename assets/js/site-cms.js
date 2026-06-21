@@ -152,9 +152,19 @@ function applyImageSettings(settings) {
 function applyIconSettings(settings) {
   document.querySelectorAll("[data-cms-icon-field]").forEach((icon) => {
     const iconName = getNested(settings, icon.dataset.cmsIconField);
-    if (iconName) icon.setAttribute("data-lucide", iconName);
+    if (iconName) renderCmsIcon(icon, iconName);
   });
 }
+
+const CUSTOM_ICON_RENDERERS = {
+  tooth: () => `
+    <svg class="custom-icon" data-custom-icon="tooth" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8.6 3.2c1.2 0 2.2.6 3.4.6s2.2-.6 3.4-.6c2.7 0 4.6 2.2 4.1 5.4-.3 1.9-1.1 3.1-1.7 4.2-.6 1.1-.8 2.2-1 3.5-.3 2.1-.9 4.5-2.6 4.5-1.1 0-1.3-1.2-1.6-2.7-.2-1.1-.5-2.2-.6-2.2s-.4 1.1-.6 2.2c-.3 1.5-.5 2.7-1.6 2.7-1.7 0-2.3-2.4-2.6-4.5-.2-1.3-.4-2.4-1-3.5-.6-1.1-1.4-2.3-1.7-4.2-.5-3.2 1.4-5.4 4.1-5.4Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M10 5.4c.7.3 1.3.4 2 .4s1.3-.1 2-.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  `,
+  teeth: () => CUSTOM_ICON_RENDERERS.tooth(),
+};
 
 const SOCIAL_ICON_RENDERERS = {
   instagram: () => `
@@ -206,6 +216,28 @@ function buildWhatsappUrl(phone = "", doctorName = "the clinic") {
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${doctorName}, I would like a dental consultation.`)}`;
 }
 
+function renderIconMarkup(iconName, fallbackIconName = "sparkles") {
+  const safeIconName = String(iconName || fallbackIconName).trim();
+  const customIconRenderer = CUSTOM_ICON_RENDERERS[safeIconName];
+  if (customIconRenderer) return customIconRenderer();
+  return `<i data-lucide="${escapeAttribute(safeIconName)}" aria-hidden="true"></i>`;
+}
+
+function renderCmsIcon(icon, iconName) {
+  const safeIconName = String(iconName || "").trim();
+  if (!safeIconName) return;
+
+  const customIconRenderer = CUSTOM_ICON_RENDERERS[safeIconName];
+  if (customIconRenderer) {
+    icon.removeAttribute("data-lucide");
+    icon.innerHTML = customIconRenderer();
+    return;
+  }
+
+  icon.innerHTML = "";
+  icon.setAttribute("data-lucide", safeIconName);
+}
+
 function renderServices(items) {
   const container = document.querySelector("[data-cms-section='services']");
   if (!container || !items.length) return;
@@ -214,7 +246,7 @@ function renderServices(items) {
     .map(
       (item) => `
         <article class="service-card">
-          <i data-lucide="${escapeAttribute(item.icon || "sparkles")}" aria-hidden="true"></i>
+          ${renderIconMarkup(item.icon, "sparkles")}
           <h3>${escapeHtml(item.title)}</h3>
           <p>${escapeHtml(item.description)}</p>
           <a href="#appointment">Learn More</a>

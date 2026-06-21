@@ -146,9 +146,9 @@ test("default clinic identity uses Dr Asif Mushtaq details and circular logo", (
   for (const source of [html, admin, adminJs]) {
     assert.match(source, /Dr Asif Mushtaq/);
     assert.match(source, /dr\.asif100@yahoo\.com/);
-    assert.match(source, /\+92 334 9844763/);
+    assert.match(source, /\+92 300 3772026/);
     assert.match(source, /857-A, J-2 Block Market, Phase 2, Johar Town, Lahore/);
-    assert.doesNotMatch(source, /Dr\. Hazzar Ahmed|Hazzar Dental|appointments@hazzardental\.com|asifmushtaq@gmail\.com|\+92 300 9844763|\+92 300 1234567|Suite 12, Main Boulevard/);
+    assert.doesNotMatch(source, /Dr\. Hazzar Ahmed|Hazzar Dental|appointments@hazzardental\.com|asifmushtaq@gmail\.com|\+92 334 9844763|\+92 300 9844763|\+92 300 1234567|Suite 12, Main Boulevard/);
   }
 
   assert.match(html, /assets\/images\/dr-asif-logo\.jpg/);
@@ -269,6 +269,26 @@ test("public site is wired for Firebase CMS hydration and appointment storage", 
   assert.match(css, /\.reveal-on-scroll/);
   assert.match(css, /\.reveal-on-scroll\.is-visible/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
+test("CMS icon fields support a custom dental tooth icon", () => {
+  const html = readHtml();
+  const siteCms = readFileSync(siteCmsPath, "utf8");
+  const adminJs = readFileSync(adminJsPath, "utf8");
+  const css = readFileSync(stylesPath, "utf8");
+
+  assert.match(html, /data-custom-icon="tooth"/);
+  assert.doesNotMatch(html, /data-lucide="circle-dot"/);
+  assert.match(adminJs, /\["implant-supported-prostheses",\s*\{[^}]*icon:\s*"tooth"/s);
+  assert.doesNotMatch(adminJs, /icon:\s*"circle-dot"/);
+  assert.match(siteCms, /CUSTOM_ICON_RENDERERS/);
+  assert.match(siteCms, /data-custom-icon="tooth"/);
+  assert.match(siteCms, /teeth:\s*\(\)\s*=>\s*CUSTOM_ICON_RENDERERS\.tooth\(\)/);
+  assert.match(siteCms, /function renderIconMarkup/);
+  assert.match(siteCms, /function renderCmsIcon/);
+  assert.match(siteCms, /renderCmsIcon\(icon,\s*iconName\)/);
+  assert.match(siteCms, /renderIconMarkup\(item\.icon,\s*"sparkles"\)/);
+  assert.match(css, /\.custom-icon\s*\{/);
 });
 
 test("admin dashboard and Firebase modules exist with required capabilities", () => {

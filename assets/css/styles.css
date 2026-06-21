@@ -542,6 +542,13 @@ p {
   height: 16px;
 }
 
+.custom-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
 .credentials,
 .cv-grid,
 .publication-grid,

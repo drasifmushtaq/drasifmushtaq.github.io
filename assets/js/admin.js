@@ -149,8 +149,8 @@ const starterContent = {
       timeline3Visible: true,
     },
     contact: {
-      phone: "+92 334 9844763",
-      whatsapp: "+92 334 9844763",
+      phone: "+92 300 3772026",
+      whatsapp: "+92 300 3772026",
       email: "dr.asif100@yahoo.com",
       address: "857-A, J-2 Block Market, Phase 2, Johar Town, Lahore",
       mapQuery: "857-A J-2 Block Market Phase 2 Johar Town Lahore",
@@ -163,7 +163,7 @@ const starterContent = {
   services: [
     ["full-mouth-rehabilitation", { title: "Full Mouth Rehabilitation", icon: "scan-face", description: "Comprehensive planning for worn, missing, failing, or collapsed dentitions using fixed, removable, and implant-supported options.", order: 1, active: true }],
     ["crowns-bridges-veneers", { title: "Crowns, Bridges & Veneers", icon: "badge-check", description: "PFM, all-ceramic crowns, bridges, veneers, and smile-defining restorations for function and natural esthetics.", order: 2, active: true }],
-    ["implant-supported-prostheses", { title: "Implant-Supported Prostheses", icon: "circle-dot", description: "Single implant restorations, implant-supported bridges, overdentures, and full-arch prosthetic rehabilitation.", order: 3, active: true }],
+    ["implant-supported-prostheses", { title: "Implant-Supported Prostheses", icon: "tooth", description: "Single implant restorations, implant-supported bridges, overdentures, and full-arch prosthetic rehabilitation.", order: 3, active: true }],
     ["complete-partial-dentures", { title: "Complete & Partial Dentures", icon: "smile", description: "Complete dentures, cast partial dentures, flexible dentures, and immediate dentures designed for comfort and retention.", order: 4, active: true }],
     ["smile-design", { title: "Smile Design", icon: "wand-sparkles", description: "Esthetic rehabilitation, veneers, tooth proportions, and restorative planning for confident, natural-looking smiles.", order: 5, active: true }],
     ["occlusal-splints", { title: "Occlusal Splints", icon: "moon", description: "Night guards, bite stabilization, occlusal analysis, and temporomandibular treatment planning support.", order: 6, active: true }],
