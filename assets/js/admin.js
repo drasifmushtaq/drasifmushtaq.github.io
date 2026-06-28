@@ -28,6 +28,7 @@ const state = {
     publications: [],
     socialLinks: [],
     faqs: [],
+    cvHighlights: [],
   },
   unsubs: [],
 };
@@ -201,6 +202,11 @@ const starterContent = {
     ["prosthodontist", { question: "Why see a prosthodontist?", answer: "A prosthodontist has specialist training in restoring and replacing teeth, including crowns, bridges, dentures, veneers, implants, bite rehabilitation, and complex oral rehabilitation.", order: 3, active: true }],
     ["cv-download", { question: "Can I review Dr Asif's professional CV?", answer: "Yes. Use the Download CV button on the website to review his FCPS Prosthodontics training, clinical experience, publications, and professional background.", order: 4, active: true }],
   ],
+  cvHighlights: [
+    ["clinical-procedure-experience", { title: "Clinical Procedure Experience", icon: "bar-chart-3", items: ["Full mouth rehabilitation cases - 100+", "Porcelain fused to metal crowns - 1000+", "All ceramic crowns and veneers - 1000+", "Conventional and cantilever bridges - 500+", "Implant-supported fixed prostheses - 500+"], order: 1, active: true }],
+    ["academic-specialist-training", { title: "Academic & Specialist Training", icon: "graduation-cap", items: ["FCPS Prosthodontics, College of Physicians & Surgeons Pakistan", "BDS, de'Montmorency College of Dentistry, Lahore", "Assistant Professor, Akhtar Saeed Medical & Dental College", "Senior Registrar experience in Lahore and Riyadh", "English C2 and Arabic clinical communication experience"], order: 2, active: true }],
+    ["selected-publications", { title: "Selected Publications", icon: "book-open-check", items: ["An overview of dental impression disinfection techniques - JPDA, 2018", "Pharyngeal obturator prosthetic rehabilitation of velopharyngeal insufficiency - JCPSP, 2019", "Assessment of denture hygiene knowledge and practices among complete denture wearers - JPDA, 2019", "Analysis of golden proportion in maxillary anterior dentition - 2022"], order: 3, active: true }],
+  ],
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -287,6 +293,10 @@ function fillForm(form, data, options = {}) {
     }
     if (input.type === "checkbox") {
       input.checked = Boolean(getNested(data, input.name) ?? data[input.name]);
+      return;
+    }
+    if (input.name === "items" && Array.isArray(getNested(data, input.name) ?? data[input.name])) {
+      input.value = (getNested(data, input.name) ?? data[input.name]).join("\n");
       return;
     }
     input.value = getNested(data, input.name) ?? data[input.name] ?? "";
@@ -426,6 +436,39 @@ function renderFaqs(rows) {
   `);
 }
 
+function renderCvHighlights(rows) {
+  const list = $("[data-list='cvHighlights']");
+  if (!list) return;
+
+  list.innerHTML = rows.length
+    ? rows
+        .map(
+          (item) => `
+            <article class="admin-card">
+              <div>
+                <i data-lucide="${escapeHtml(item.icon || "circle")}" aria-hidden="true"></i>
+                <h3>${escapeHtml(item.title || "Untitled highlight")}</h3>
+                <ul>${(item.items || []).map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul>
+                <small>Order ${Number(item.order || 0)} ${item.active === false ? "• Hidden" : "• Visible"}</small>
+              </div>
+              ${cardActions("cvHighlights", item.id)}
+            </article>
+          `
+        )
+        .join("")
+    : `
+      <div class="admin-empty">
+        <h3>Default highlights are not loaded yet</h3>
+        <p>The public website can show fallback highlight cards, but they become editable here only after they are saved in Firestore.</p>
+        <button class="btn btn-secondary" type="button" data-seed-section="cvHighlights">
+          <i data-lucide="database" aria-hidden="true"></i>
+          <span>Load Default Highlights</span>
+        </button>
+      </div>
+    `;
+  window.lucide?.createIcons();
+}
+
 function renderSimpleList(collection, rows, bodyRenderer) {
   const list = $(`[data-list='${collection}']`);
   if (!list) return;
@@ -450,6 +493,13 @@ async function handleCollectionForm(event, collection) {
   const id = form.elements.id?.value?.trim() || "";
   const data = formToObject(form);
 
+  if (collection === "cvHighlights" && typeof data.items === "string") {
+    data.items = data.items
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+
   await saveDocument(getFirestoreCollection(collection), data, id);
   form.reset();
   if (form.elements.id) form.elements.id.value = "";
@@ -471,6 +521,7 @@ function collectionToFirestore(collection) {
     publications: CMS_COLLECTIONS.publications,
     socialLinks: CMS_COLLECTIONS.socialLinks,
     faqs: CMS_COLLECTIONS.faqs,
+    cvHighlights: CMS_COLLECTIONS.cvHighlights,
   }[collection];
 }
 
@@ -520,6 +571,11 @@ async function startSubscriptions() {
     renderFaqs(rows);
   }));
 
+  state.unsubs.push(await subscribeCollection(CMS_COLLECTIONS.cvHighlights, (rows) => {
+    state.records.cvHighlights = rows;
+    renderCvHighlights(rows);
+  }));
+
   await loadSettingsForm();
 }
 
@@ -545,6 +601,26 @@ function bindEvents() {
     setStatus("");
   });
 
+  async function seedSectionContent(sectionKey) {
+    const items = starterContent[sectionKey];
+    if (!items?.length) return;
+
+    const labels = {
+      cvHighlights: "default highlights",
+    };
+
+    if (!window.confirm(`Load ${labels[sectionKey] || sectionKey} into Firebase? Existing matching starter records will be updated.`)) return;
+
+    try {
+      setStatus("Loading default content...");
+      const collection = getFirestoreCollection(sectionKey);
+      await Promise.all(items.map(([id, data]) => saveDocument(collection, data, id)));
+      setStatus("Default content loaded.", "success");
+    } catch (error) {
+      setStatus(error.message, "error");
+    }
+  }
+
   async function seedStarterContent() {
     if (!window.confirm("Load starter content into Firebase? Existing matching starter records will be updated.")) return;
     try {
@@ -557,6 +633,7 @@ function bindEvents() {
         ...starterContent.publications.map(([id, data]) => saveDocument(CMS_COLLECTIONS.publications, data, id)),
         ...starterContent.socialLinks.map(([id, data]) => saveDocument(CMS_COLLECTIONS.socialLinks, data, id)),
         ...starterContent.faqs.map(([id, data]) => saveDocument(CMS_COLLECTIONS.faqs, data, id)),
+        ...starterContent.cvHighlights.map(([id, data]) => saveDocument(CMS_COLLECTIONS.cvHighlights, data, id)),
       ]);
       await loadSettingsForm();
       setStatus("Starter content loaded.", "success");
@@ -588,12 +665,18 @@ function bindEvents() {
 
   document.addEventListener("click", async (event) => {
     const seedButton = event.target.closest("[data-seed-content]");
+    const seedSectionButton = event.target.closest("[data-seed-section]");
     const editButton = event.target.closest("[data-edit-record]");
     const deleteButton = event.target.closest("[data-delete-record]");
     const statusButton = event.target.closest("[data-appointment-status]");
 
     if (seedButton) {
       await seedStarterContent();
+      return;
+    }
+
+    if (seedSectionButton) {
+      await seedSectionContent(seedSectionButton.dataset.seedSection);
       return;
     }
 
